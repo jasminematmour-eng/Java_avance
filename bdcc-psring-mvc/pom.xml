@@ -64,6 +64,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+            <version>1.18.38</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -95,6 +96,10 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-h2console</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -118,6 +123,7 @@
                                 <path>
                                     <groupId>org.projectlombok</groupId>
                                     <artifactId>lombok</artifactId>
+                                    <version>1.18.38</version>
                                 </path>
                             </annotationProcessorPaths>
                         </configuration>
