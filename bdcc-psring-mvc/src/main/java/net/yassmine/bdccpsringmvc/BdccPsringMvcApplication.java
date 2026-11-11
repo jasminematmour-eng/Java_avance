@@ -1,3 +1,4 @@
+
 package net.yassmine.bdccpsringmvc;
 
 import net.yassmine.bdccpsringmvc.entities.Product;
@@ -15,27 +16,30 @@ public class BdccPsringMvcApplication {
     }
 
     @Bean
-    public CommandLineRunner start(ProductRepository productRepository){
+    public CommandLineRunner start(ProductRepository productRepository) {
         return args -> {
+
             productRepository.save(Product.builder()
                     .name("computer")
                     .price(5400)
                     .quantity(12)
                     .build());
+
             productRepository.save(Product.builder()
                     .name("printer")
                     .price(1200)
                     .quantity(11)
                     .build());
+
             productRepository.save(Product.builder()
                     .name("smart phone")
                     .price(8400)
                     .quantity(33)
                     .build());
-            productRepository.findAll().forEach(p->{
-            System.out.println(p.toString());
 
-        });
-    };
-
-}}
+            productRepository.findAll().forEach(p -> {
+                System.out.println(p.toString());
+            });
+        };
+    }
+}
