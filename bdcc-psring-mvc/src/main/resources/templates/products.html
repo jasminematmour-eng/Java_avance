@@ -8,18 +8,15 @@
 <div>
     <table>
         <thead>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
+        <th>ID</th><th>Name</th><th>Price</th><th>Quantity</th>
         </thead>
         <tbody>
-        <tr th:each="p:${productList}">
-            <td th:test="${p.id}"></td>
-            <td th:test="${p.name}"></td>
-            <td th:test="${p.price}"></td>
-            <td th:test="${p.quantity}"></td>
-        </tr>
+            <tr th:each="p:${productList}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.price}"></td>
+                <td th:text="${p.quantity}"></td>
+            </tr>
         </tbody>
     </table>
 </div>
