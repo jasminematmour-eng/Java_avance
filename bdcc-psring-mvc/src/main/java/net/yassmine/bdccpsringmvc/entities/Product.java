@@ -1,3 +1,4 @@
+
 package net.yassmine.bdccpsringmvc.entities;
 
 import jakarta.persistence.Entity;
@@ -16,15 +17,18 @@ import lombok.*;
 @ToString
 @Builder
 public class Product {
-    @Id@GeneratedValue
+
+    @Id
+    @GeneratedValue
     private Long id;
+
     @NotEmpty
-    @Size(min=3, max=50)
+    @Size(min = 3, max = 50)
     private String name;
+
     @Min(0)
-    private  double price;
+    private double price;
+
     @Min(1)
     private double quantity;
-
-
 }

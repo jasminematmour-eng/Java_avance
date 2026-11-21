@@ -3,6 +3,7 @@ package net.yassmine.bdccpsringmvc;
 
 import net.yassmine.bdccpsringmvc.entities.Product;
 import net.yassmine.bdccpsringmvc.repository.ProductRepository;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,9 +38,7 @@ public class BdccPsringMvcApplication {
                     .quantity(33)
                     .build());
 
-            productRepository.findAll().forEach(p -> {
-                System.out.println(p.toString());
-            });
+            productRepository.findAll().forEach(System.out::println);
         };
     }
 }
