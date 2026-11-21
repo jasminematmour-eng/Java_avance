@@ -11,39 +11,25 @@
 </head>
 
 <body>
-
-<div class="p-3" layout:fragment="content1">
-
-    <h2>Products List</h2>
-
-    <table class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="p : ${productList}">
-            <td th:text="${p.id}"></td>
-            <td th:text="${p.name}"></td>
-            <td th:text="${p.price}"></td>
-            <td th:text="${p.quantity}"></td>
-            <td>
-                <a class="btn btn-danger"
-                   onclick="return confirm('Etes-vous sûr ?')"
-                   th:href="@{/delete(id=${p.id})}">
-                    Delete
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <footer></footer>
+<div class="p-3 layout:fragment="content1>
+    <form method="post" th:action="@{/saveProduct}">
+        <div class="mb-3">
+            <label class="form-label">name</label>
+            <input class="form-control" type="text" name="name" th:value="${product.name}" >
+            <spam class="text-danger" th:errors="${product.name}"></spam>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">price</label>
+            <input class="form-control" type="text" name="price" th:value="${product.price}" >
+            <spam class="text-danger" th:errors="${product.price}"></spam>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">quantity</label>
+            <input class="form-control" type="text" name="quantity" th:value="${product.quantity}" >
+            <spam class="text-danger" th:errors="${product.quantity}"></spam>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
 
 </div>
 
