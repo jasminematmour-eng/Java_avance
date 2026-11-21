@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstarp/5.3.5/css/bootstarp.min.css">
 </head>
 <body>
-<div>
-    <table>
+<div class="p-3">
+    <table class="table">
         <thead>
         <th>ID</th><th>Name</th><th>Price</th><th>Quantity</th>
         </thead>
@@ -16,10 +17,12 @@
                 <td th:text="${p.name}"></td>
                 <td th:text="${p.price}"></td>
                 <td th:text="${p.quantity}"></td>
+                <td>
+                    <a class="btn btn-danger" th:href="@{delete(id=${p.id})}">Delete</a>
+                </td>
             </tr>
         </tbody>
     </table>
 </div>
-<h2>Test</h2>
 </body>
 </html>
