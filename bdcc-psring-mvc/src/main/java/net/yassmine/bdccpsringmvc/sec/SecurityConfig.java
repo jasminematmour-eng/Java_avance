@@ -1,8 +1,8 @@
+
 package net.yassmine.bdccpsringmvc.sec;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -14,24 +14,36 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
-        PasswordEncoder encoder = passwordEncoder();
-        System.out.println("=======");
-        String encoderPWD = encoder.encode("123456");
-        System.out.println(encoderPWD);
-        System.out.println("========");
-        return new InMemoryUserDetailsManager(
-                User.withUsername("user1").password(passwordEncoder().encode("1234")).roles("USER").build(),
-                User.withUsername("user2").password(passwordEncoder().encode("1234")).roles("USER").build(),
-                User.withUsername("admin").password(passwordEncoder().encode("1234")).roles("USER", "ADMIN").build()
 
-                );
+    @Bean
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+
+        PasswordEncoder encoder = passwordEncoder();
+
+        return new InMemoryUserDetailsManager(
+
+                User.withUsername("user1")
+                        .password(encoder.encode("1234"))
+                        .roles("USER")
+                        .build(),
+
+                User.withUsername("user2")
+                        .password(encoder.encode("1234"))
+                        .roles("USER")
+                        .build(),
+
+                User.withUsername("admin")
+                        .password(encoder.encode("1234"))
+                        .roles("USER", "ADMIN")
+                        .build()
+        );
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
@@ -39,13 +51,25 @@ public class SecurityConfig {
         return http
                 .formLogin(form -> form
                         .defaultSuccessUrl("/user/index", true)
+                        .permitAll()
                 )
+
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                )
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(eh->eh.accessDeniedPage("/notAuthorized" ))
+
                 .build();
     }
 }

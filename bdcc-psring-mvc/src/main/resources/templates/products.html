@@ -17,42 +17,47 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
 
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" th:href="@{/user/index}">
+            Gestion des produits
+        </a>
 
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent">
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse"
+             id="navbarSupportedContent">
+
+            <!-- Menu gauche -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/index}">Products</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#"
-                       data-bs-toggle="dropdown">
-                        Dropdown
+                    <a class="nav-link" th:href="@{/user/index}">
+                        Home
                     </a>
-
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                    </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                    <a class="nav-link active" th:href="@{/user/index}">
+                        Products
+                    </a>
                 </li>
 
             </ul>
+
+            <!-- Logout à droite -->
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-light">
+                    Logout
+                </button>
+            </form>
+
         </div>
     </div>
 </nav>
@@ -64,8 +69,9 @@
 
         <h2>Products List</h2>
 
-        <a class="btn btn-primary" th:href="@{/admin/newProduct}">
-            new product
+        <a class="btn btn-primary"
+           th:href="@{/admin/newProduct}">
+            New Product
         </a>
 
     </div>

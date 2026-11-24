@@ -1,16 +1,40 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nouveau produit</title>
+
     <link rel="stylesheet"
           th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
 </head>
+
 <body>
 
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" th:href="@{/user/index}">
+            Gestion des produits
+        </a>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-light">
+                Logout
+            </button>
+        </form>
+
+    </div>
+</nav>
+
+<!-- Formulaire -->
 <div class="container mt-5">
+
     <div class="card shadow p-4">
+
         <h3 class="mb-4">Ajouter un nouveau produit</h3>
 
         <form th:action="@{/admin/saveProduct}"
@@ -18,41 +42,69 @@
               method="post">
 
             <div class="mb-3">
+
                 <label class="form-label">Nom du produit</label>
-                <input type="text" class="form-control"
+
+                <input type="text"
+                       class="form-control"
                        th:field="*{name}"
                        placeholder="Entrez le nom">
-                <div class="text-danger" th:errors="*{name}"></div>
+
+                <div class="text-danger"
+                     th:errors="*{name}">
+                </div>
+
             </div>
 
             <div class="mb-3">
+
                 <label class="form-label">Prix</label>
-                <input type="number" step="0.01"
+
+                <input type="number"
+                       step="0.01"
                        class="form-control"
                        th:field="*{price}"
                        placeholder="Entrez le prix">
-                <div class="text-danger" th:errors="*{price}"></div>
+
+                <div class="text-danger"
+                     th:errors="*{price}">
+                </div>
+
             </div>
 
             <div class="mb-3">
+
                 <label class="form-label">Quantité</label>
-                <input type="number" step="0.01"
+
+                <input type="number"
+                       step="0.01"
                        class="form-control"
                        th:field="*{quantity}"
                        placeholder="Entrez la quantité">
-                <div class="text-danger" th:errors="*{quantity}"></div>
+
+                <div class="text-danger"
+                     th:errors="*{quantity}">
+                </div>
+
             </div>
 
             <button type="submit" class="btn btn-success">
                 Enregistrer
             </button>
 
-            <a th:href="@{/user/index}" class="btn btn-secondary">
+            <a th:href="@{/user/index}"
+               class="btn btn-secondary">
                 Retour
             </a>
+
         </form>
+
     </div>
+
 </div>
+
+<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}">
+</script>
 
 </body>
 </html>
