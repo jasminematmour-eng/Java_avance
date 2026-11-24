@@ -38,7 +38,7 @@ public class SecurityConfig {
 
         return http
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/index", true)
+                        .defaultSuccessUrl("/user/index", true)
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").hasRole("USER")

@@ -15,7 +15,20 @@
         <a class="navbar-brand" th:href="@{/index}">
             Gestion des produits
         </a>
-    </div>
+        <ul class="navbar">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    [Username]
+                </a>
+                <ul class="dropdown-menu" aria-label="navbarDropdown">
+                    <li><a class="dropdown-item" th:href="">Logout</a></li>
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </li>
+        </ul>    </div>
 </nav>
 
 <div class="container mt-4">
