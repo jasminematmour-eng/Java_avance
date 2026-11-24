@@ -26,7 +26,6 @@ public class SecurityConfig {
         PasswordEncoder encoder = passwordEncoder();
 
         return new InMemoryUserDetailsManager(
-
                 User.withUsername("user1")
                         .password(encoder.encode("1234"))
                         .roles("USER")
@@ -53,7 +52,7 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/user/index", true)
                         .permitAll()
                 )
-
+                .csrf(csrf->csrf.disable())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
@@ -65,7 +64,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(eh->eh.accessDeniedPage("/notAuthorized" ))
