@@ -21,10 +21,14 @@ public class SecurityConfig {
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
         PasswordEncoder encoder = passwordEncoder();
+        System.out.println("=======");
+        String encoderPWD = encoder.encode("123456");
+        System.out.println(encoderPWD);
+        System.out.println("========");
         return new InMemoryUserDetailsManager(
                 User.withUsername("user1").password(passwordEncoder().encode("1234")).roles("USER").build(),
                 User.withUsername("user2").password(passwordEncoder().encode("1234")).roles("USER").build(),
-                User.withUsername("user3").password(passwordEncoder().encode("1234")).roles("USER,ADMIN").build()
+                User.withUsername("admin").password(passwordEncoder().encode("1234")).roles("USER", "ADMIN").build()
 
                 );
     }
@@ -37,8 +41,9 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/index", true)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/index", "/index/**").hasRole("USER")
-                        .requestMatchers("/saveProduct", "/delete").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();

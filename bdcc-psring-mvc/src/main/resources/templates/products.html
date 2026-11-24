@@ -64,7 +64,7 @@
 
         <h2>Products List</h2>
 
-        <a class="btn btn-primary" th:href="@{/newProduct}">
+        <a class="btn btn-primary" th:href="@{/admin/newProduct}">
             new product
         </a>
 
@@ -94,7 +94,7 @@
             <td>
                 <a class="btn btn-danger btn-sm"
                    onclick="return confirm('Are you sure?')"
-                   th:href="@{/delete(id=${p.id})}">
+                   th:href="@{/admin/delete(id=${p.id})}">
                     Delete
                 </a>
             </td>
