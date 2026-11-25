@@ -3,9 +3,16 @@ package net.yassmine.bdccpsringmvc.sec;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -13,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -48,11 +56,10 @@ public class SecurityConfig {
             throws Exception {
 
         return http
-                .formLogin(form -> form
-                        .defaultSuccessUrl("/user/index", true)
-                        .permitAll()
+                .formLogin(fl->fl.loginPage("/login").permitAll()
                 )
-                .csrf(csrf->csrf.disable())
+                .csrf(Customizer.withDefaults())
+
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
@@ -62,8 +69,10 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/**").hasRole("USER")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                       // .requestMatchers("/user/**").hasRole("USER")
+                        //.requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/public/**","/webjars/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(eh->eh.accessDeniedPage("/notAuthorized" ))

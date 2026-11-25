@@ -1,6 +1,8 @@
 
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -34,7 +36,6 @@
         <div class="collapse navbar-collapse"
              id="navbarSupportedContent">
 
-            <!-- Menu gauche -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li class="nav-item">
@@ -51,7 +52,7 @@
 
             </ul>
 
-            <!-- Logout à droite -->
+            <!-- Logout -->
             <form th:action="@{/logout}" method="post">
                 <button type="submit" class="btn btn-light">
                     Logout
@@ -69,7 +70,9 @@
 
         <h2>Products List</h2>
 
+        <!-- New Product : ADMIN uniquement -->
         <a class="btn btn-primary"
+           sec:authorize="hasRole('ADMIN')"
            th:href="@{/admin/newProduct}">
             New Product
         </a>
@@ -84,7 +87,9 @@
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
-            <th>Action</th>
+
+            <!-- Action : ADMIN uniquement -->
+            <th sec:authorize="hasRole('ADMIN')">Action</th>
         </tr>
         </thead>
 
@@ -97,14 +102,25 @@
             <td th:text="${p.price}"></td>
             <td th:text="${p.quantity}"></td>
 
-            <td>
-                <a class="btn btn-danger btn-sm"
-                   onclick="return confirm('Are you sure?')"
-                   th:href="@{/admin/delete(id=${p.id})}">
-                    Delete
-                </a>
+            <!-- Un seul bouton Delete : ADMIN uniquement -->
+            <td sec:authorize="hasRole('ADMIN')">
+                <form method="post"
+                      th:action="@{/admin/delete(id=${p.id})}"
+                      onsubmit="return confirm('Are you sure?')">
+
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+
+                </form>
             </td>
 
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(productList)}">
+            <td colspan="5" class="text-center text-muted">
+                Aucun produit disponible.
+            </td>
         </tr>
 
         </tbody>

@@ -1,18 +1,17 @@
 
 package net.yassmine.bdccpsringmvc.web;
 
+import jakarta.servlet.http.HttpSession;
 import net.yassmine.bdccpsringmvc.entities.Product;
 import net.yassmine.bdccpsringmvc.repository.ProductRepository;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +22,7 @@ public class ProductController {
     private ProductRepository productRepository;
 
     @GetMapping("/user/index")
+    @PreAuthorize("hasRole('USER')")
     public String index(Model model) {
         List<Product> products = productRepository.findAll();
         model.addAttribute("productList", products);
@@ -30,10 +30,12 @@ public class ProductController {
     }
 
     @GetMapping("/admin/newProduct")
+    @PreAuthorize("hasRole('ADMIN')")
     public String newProduct(Model model) {
         model.addAttribute("product", new Product());
         return "new-product";
     }
+    @PreAuthorize("hasRole('ADMIN')")
 
     @PostMapping("/admin/saveProduct")
     public String saveProduct(
@@ -49,7 +51,8 @@ public class ProductController {
         return "redirect:/user/index";
     }
 
-    @GetMapping("/admin/delete")
+    @PostMapping("/admin/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@RequestParam(name = "id") Long id) {
         productRepository.deleteById(id);
         return "redirect:/user/index";
@@ -62,5 +65,14 @@ public class ProductController {
     @GetMapping("/notAuthorized")
     public String notAuthorized(){
         return "notAuthorized";
+    }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "login";
     }
 }
