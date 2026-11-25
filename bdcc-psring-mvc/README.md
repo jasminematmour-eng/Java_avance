@@ -405,5 +405,5 @@ Ce projet met en pratique les concepts essentiels d'une application JEE moderne 
 
 ---
 
-👤 **Auteur** : *Votre nom*
-📅 **Date** : 24 novembre 2026
+👤 **Auteur** : *MATMOUR YASSMINE*
+
